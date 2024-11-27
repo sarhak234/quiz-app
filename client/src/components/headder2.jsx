@@ -4,7 +4,7 @@ function headder2() {
   
   const [time, setTime] = useState(() => {
     const savedTime = localStorage.getItem('quizTime');
-    return savedTime ? parseInt(savedTime) : 1800;
+    return savedTime ? parseInt(savedTime) : 1200;
   });
   
   const [isActive, setIsActive] = useState(() => {
