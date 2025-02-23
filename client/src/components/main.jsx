@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Main() {
   const questions = [
@@ -310,7 +310,7 @@ const answers = [
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
-  const [quizStarted, setQuizStarted] = useState(false); // State to control quiz visibility
+  const [quizStarted, setQuizStarted] = useState(false);
 
   const handleOptionSelect = (questionId, selectedOption) => {
     setSelectedAnswers((prev) => ({
@@ -331,13 +331,12 @@ const answers = [
   };
 
   const startQuiz = () => {
-    setQuizStarted(true); // Show the quiz when the button is clicked
+    setQuizStarted(true); // Start the quiz when the button is clicked
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-1 sm:p-4 md:p-6">
+    <div className="max-w-4xl mx-auto p-4">
       {!quizStarted ? (
-        // Show the "Start Quiz" button if the quiz hasn't started
         <div className="flex justify-center items-center h-screen">
           <button
             onClick={startQuiz}
@@ -347,14 +346,13 @@ const answers = [
           </button>
         </div>
       ) : (
-        // Show the quiz content if the quiz has started
         <>
           {showResults && (
-            <div className="sticky top-0 z-50 w-full bg-white shadow-md mb-2 sm:mb-4">
-              <div className="max-w-4xl mx-auto p-2 sm:p-3 md:p-4 flex justify-between items-center">
-                <div className="text-sm sm:text-base md:text-lg font-medium sm:font-semibold">
-                  Your score: <span className="text-blue-600">{score}</span> out of {questions.length}
-                  <div className="text-[10px] sm:text-xs md:text-sm text-gray-600">
+            <div className="sticky top-0 z-50 w-full bg-white shadow-md mb-4">
+              <div className="max-w-4xl mx-auto p-4 flex justify-between items-center">
+                <div className="text-lg font-semibold">
+                  Your score: <span className="text-blue-600">{score}</span> / {questions.length}
+                  <div className="text-sm text-gray-600">
                     ({((score / questions.length) * 100).toFixed(1)}%)
                   </div>
                 </div>
@@ -362,21 +360,18 @@ const answers = [
             </div>
           )}
 
-          <div className="grid gap-2 sm:gap-4 md:gap-6">
+          <div className="grid gap-4">
             {questions.map((q) => (
-              <div
-                key={q.id}
-                className="bg-white rounded-md sm:rounded-lg shadow-sm sm:shadow-md p-2 sm:p-4 md:p-6 hover:shadow-lg transition-shadow"
-              >
+              <div key={q.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
                 <p
-                  className="text-sm sm:text-base md:text-lg font-medium sm:font-semibold mb-2 sm:mb-3 md:mb-4 text-gray-800"
-                  dangerouslySetInnerHTML={{ __html: `<span class="text-blue-600 mr-1 sm:mr-2">${q.id}.</span>${q.question}` }}
+                  className="text-lg font-semibold mb-3 text-gray-800"
+                  dangerouslySetInnerHTML={{ __html: `<span class="text-blue-600 mr-2">${q.id}.</span>${q.question}` }}
                 ></p>
-                <div className="grid gap-1 sm:gap-2 md:gap-3">
+                <div className="grid gap-2">
                   {q.options.map((option) => (
                     <div
                       key={option}
-                      className={`flex items-center p-1.5 sm:p-2 md:p-3 rounded border cursor-pointer hover:bg-blue-50 transition-colors ${
+                      className={`flex items-center p-3 rounded border cursor-pointer hover:bg-blue-50 transition-colors ${
                         selectedAnswers[q.id] === option ? "border-blue-500 bg-blue-50" : "border-gray-200"
                       }`}
                     >
@@ -387,44 +382,25 @@ const answers = [
                         value={option}
                         checked={selectedAnswers[q.id] === option}
                         onChange={() => handleOptionSelect(q.id, option)}
-                        className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600"
+                        className="w-4 h-4 text-blue-600"
                       />
                       <label
                         htmlFor={`${q.id}-${option}`}
-                        className="ml-2 sm:ml-3 text-xs sm:text-sm md:text-base cursor-pointer flex-grow"
+                        className="ml-3 text-base cursor-pointer flex-grow"
                         dangerouslySetInnerHTML={{ __html: option }}
                       ></label>
                     </div>
                   ))}
                 </div>
                 {showResults && (
-                  <div className="mt-2 sm:mt-3 md:mt-4 p-1.5 sm:p-2 md:p-3 rounded">
+                  <div className="mt-3 p-3 rounded">
                     {selectedAnswers[q.id] === answers.find((a) => a.id === q.id).answer ? (
-                      <div className="flex items-center text-green-600 text-xs sm:text-sm md:text-base">
-                        <svg
-                          className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1 sm:mr-2"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="font-medium">Correct!</span>
+                      <div className="flex items-center text-green-600 text-base">
+                        ✅ <span className="ml-2 font-medium">Correct!</span>
                       </div>
                     ) : (
-                      <div className="flex items-center text-red-600 text-xs sm:text-sm md:text-base">
-                        <svg
-                          className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1 sm:mr-2"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        <span className="font-medium">
-                          Incorrect. Correct answer:{" "}
-                          <span dangerouslySetInnerHTML={{ __html: answers.find((a) => a.id === q.id).answer }}></span>
-                        </span>
+                      <div className="flex items-center text-red-600 text-base">
+                        ❌ <span className="ml-2 font-medium">Correct answer: <span dangerouslySetInnerHTML={{ __html: answers.find((a) => a.id === q.id).answer }}></span></span>
                       </div>
                     )}
                   </div>
@@ -433,10 +409,10 @@ const answers = [
             ))}
           </div>
 
-          <div className="sticky bottom-0 bg-white p-2 sm:p-3 md:p-4 border-t mt-2 sm:mt-4 md:mt-6 flex flex-col sm:flex-row justify-center items-center">
+          <div className="sticky bottom-0 bg-white p-4 border-t mt-6 flex justify-center items-center">
             <button
               onClick={checkAnswers}
-              className="w-full sm:w-auto bg-blue-600 text-white px-4 sm:px-6 md:px-8 py-1.5 sm:py-2 md:py-3 rounded text-xs sm:text-sm md:text-base font-medium hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="bg-blue-600 text-white px-8 py-3 rounded text-lg font-medium hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               Check Answers
             </button>
